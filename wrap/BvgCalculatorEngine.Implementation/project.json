@@ -1,0 +1,15 @@
+{
+  "version": "1.0.0-*",
+  "frameworks": {
+    "net451": {
+      "wrappedProject": "../../BvgCalculatorEngine.Implementation/BvgCalculatorEngine.Implementation.csproj",
+      "bin": {
+        "assembly": "../../BvgCalculatorEngine.Implementation/obj/{configuration}/BvgCalculatorEngine.Implementation.dll",
+        "pdb": "../../BvgCalculatorEngine.Implementation/obj/{configuration}/BvgCalculatorEngine.Implementation.pdb"
+      },
+      "dependencies": {
+        "BvgCalculatorEngine.Contracts": "1.0.0-*"
+      }
+    }
+  }
+}
