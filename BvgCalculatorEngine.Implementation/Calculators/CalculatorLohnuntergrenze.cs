@@ -1,7 +1,7 @@
 using BvgCalculatorEngine.Contracts;
 using BvgCalculatorEngine.Contracts.Calculators;
 
-namespace BvgCalculatorEngine.Implementation
+namespace BvgCalculatorEngine.Implementation.Calculators
 {
     public class CalculatorLohnuntergrenze : ICalcLohnuntergrenze
     {

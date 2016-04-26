@@ -1,4 +1,5 @@
 ﻿using BvgCalculatorEngine.Contracts.Calculators;
+using BvgCalculatorEngine.Implementation.Calculators;
 using Ninject.Modules;
 
 namespace BvgCalculatorEngine.Implementation
@@ -8,6 +9,9 @@ namespace BvgCalculatorEngine.Implementation
         public override void Load()
         {
             Bind<ICalculatorAhv>().To<CalculatorAhv>();
+            Bind<ICalcSchlussalter>().To<CalculatorSchlussalter>();
+            Bind<ICalcStaffelung>().To<CalculatorStaffelung>();
+            Bind<ICalcAlterguthabenEndeJahr>().To<CalculatorAltersguthabenEndeJahr>();
             Bind<ICalcAltersgutschrift>().To<CalculatorAltersgutschrift>();
             Bind<ICalcJahreslohn>().To<CalculatorJahrslohn>();
             Bind<ICalcVersicherterLohn>().To<CalculatorVersicherterLohn>();

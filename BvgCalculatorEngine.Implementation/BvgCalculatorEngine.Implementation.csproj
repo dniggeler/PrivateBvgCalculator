@@ -47,6 +47,8 @@
     <Compile Include="Calculators\CalculatorBvg.cs" />
     <Compile Include="BvgCalculator.cs" />
     <Compile Include="Calculators\CalculatorAltersgutschrift.cs" />
+    <Compile Include="Calculators\CalculatorAltersguthabenEndeJahr.cs" />
+    <Compile Include="Calculators\CalculatorSchlussalter.cs" />
     <Compile Include="Calculators\CalculatorMinimumLohn.cs" />
     <Compile Include="Calculators\CalculatorLohnuntergrenze.cs" />
     <Compile Include="Calculators\CalculatorKoordinationsabzug.cs" />
@@ -54,6 +56,7 @@
     <Compile Include="BvgCalculatorModule.cs" />
     <Compile Include="Calculators\CalculatorJahrslohn.cs" />
     <Compile Include="Calculators\CalculatorVersicherterLohn.cs" />
+    <Compile Include="Calculators\CalculatorStaffelung.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

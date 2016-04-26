@@ -12,6 +12,7 @@ namespace BvgCalculatorEngine.Contracts
     {
         public decimal VersicherterLohn { get; set; }
         public decimal Altersgutschrift { get; set; }
+        public decimal AlterguthabenEndeJahr { get; set; }
         public decimal EaghMitZins { get; set; }
         public decimal EaghOhneZins { get; set; }
         public decimal Altersrente { get; set; }

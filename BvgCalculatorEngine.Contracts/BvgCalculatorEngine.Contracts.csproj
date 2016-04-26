@@ -43,6 +43,9 @@
     <Compile Include="BvgCalculationInput.cs" />
     <Compile Include="BvgConstants.cs" />
     <Compile Include="BvgPlan.cs" />
+    <Compile Include="Calculators\ICalcAlterguthabenEndeJahr.cs" />
+    <Compile Include="Calculators\ICalcSchlussalter.cs" />
+    <Compile Include="Calculators\ICalcStaffelung.cs" />
     <Compile Include="Calculators\ICalcAltersgutschrift.cs" />
     <Compile Include="Calculators\ICalcMinimumLohn.cs" />
     <Compile Include="Calculators\ICalcLohnuntergrenze.cs" />

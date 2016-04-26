@@ -15,12 +15,48 @@ namespace CalculatorBvg.Tests
     {
         private readonly ITestOutputHelper _outputHelper;
         private readonly StandardKernel _kernel;
+        private readonly IBvgCalculator _calculator;
 
         public CalculatorBvgTests(ITestOutputHelper outputHelper)
         {
             _outputHelper = outputHelper;
             _kernel = new StandardKernel(new NinjectSettings { LoadExtensions = false });
             _kernel.Load<BvgCalculatorModule>();
+            _calculator = _kernel.Get<IBvgCalculator>();
+
+        }
+
+        [Trait("BVG Calculator Tests", "Altersguthaben Ende Jahr")]
+        [Theory]
+        [InlineData(152000, "1969/03/17", "2016/01/01", 200000.00, 208988.75)]
+        [InlineData(66000, "1995/05/13", "2016/01/01", 0.00, 0.00)]
+        public async Task AltersguthabenEndeJahrTest(int gemeldeterLohnAsInt, string dateOfBirthAsString, 
+            string dateOfEintrittAsString, int einlageAsDouble, double expectedEndaltersguthabenAsDouble)
+        {
+            // given
+            decimal gemeldeterLohn = gemeldeterLohnAsInt;
+            decimal einlage = Convert.ToDecimal(einlageAsDouble);
+            DateTime dateOfBirth = DateTime.Parse(dateOfBirthAsString, CultureInfo.InvariantCulture);
+            DateTime dateOfEintritt = DateTime.Parse(dateOfEintrittAsString, CultureInfo.InvariantCulture);
+
+            decimal expectedEndaltersguthaben = Convert.ToDecimal(expectedEndaltersguthabenAsDouble);
+
+            var input = new BvgCalculationInput
+            {
+                Lohn = gemeldeterLohn,
+                DateOfEintritt = dateOfEintritt,
+                DateOfBirth = dateOfBirth,
+                Altersguthaben = einlage,
+                Geschlecht = Geschlecht.Mann,
+            };
+
+            // when
+            var plan = new BvgPlan();
+            var result = await _calculator.CalculateAsync(plan, input).ConfigureAwait(false);
+
+            // then
+            result.AlterguthabenEndeJahr.Should().Be(expectedEndaltersguthaben);
+
         }
 
         [Trait("BVG Calculator Tests", "Versicherter Lohn")]
@@ -66,6 +102,16 @@ namespace CalculatorBvg.Tests
         [InlineData(21151, 528.75, "1969/03/17")]
         [InlineData(21150, 0, "1969/03/17")]
         [InlineData(19000, 0, "1969/03/17")]
+        // Stufe [55,65]
+        [InlineData(40000, 2758.5, "1961/01/01")]
+        // Stufe [45,54]
+        [InlineData(40000, 2298.75, "1969/03/17")]
+        // Stufe [35,44]
+        [InlineData(40000, 1532.5, "1979/03/17")]
+        // Stufe [25,34]
+        [InlineData(40000, 1072.75, "1989/03/17")]
+        // Stufe < 25
+        [InlineData(40000, 0, "2000/03/17")]
         public async Task AltersgutschriftTest(int gemeldeterLohnAsInt, double expectedAltersgutschriftAsDouble, string dateOfBirthAsString)
         {
             _outputHelper.WriteLine($"Lohn={gemeldeterLohnAsInt}, AGS={expectedAltersgutschriftAsDouble}, DoB={dateOfBirthAsString}");

@@ -1,4 +1,6 @@
-﻿namespace BvgCalculatorEngine.Contracts.Calculators
+﻿using BvgCalculatorEngine.Contracts.Calculators;
+
+namespace BvgCalculatorEngine.Implementation.Calculators
 {
     class CalculatorAhv : ICalculatorAhv
     {
