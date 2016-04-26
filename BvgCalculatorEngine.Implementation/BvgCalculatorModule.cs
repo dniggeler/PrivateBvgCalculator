@@ -1,4 +1,5 @@
-﻿using BvgCalculatorEngine.Contracts.Calculators;
+﻿using BvgCalculatorEngine.Contracts;
+using BvgCalculatorEngine.Contracts.Calculators;
 using BvgCalculatorEngine.Implementation.Calculators;
 using Ninject.Modules;
 
@@ -10,6 +11,7 @@ namespace BvgCalculatorEngine.Implementation
         {
             Bind<ICalculatorAhv>().To<CalculatorAhv>();
             Bind<ICalcSchlussalter>().To<CalculatorSchlussalter>();
+            Bind<ICalcDateOfPensionierung>().To<CalculatorDateOfPensionierung>();
             Bind<ICalcStaffelung>().To<CalculatorStaffelung>();
             Bind<ICalcAlterguthabenEndeJahr>().To<CalculatorAltersguthabenEndeJahr>();
             Bind<ICalcAltersgutschrift>().To<CalculatorAltersgutschrift>();
@@ -19,6 +21,7 @@ namespace BvgCalculatorEngine.Implementation
             Bind<ICalcMinimumLohn>().To<CalculatorMinimumLohn>();
             Bind<ICalcLohnuntergrenze>().To<CalculatorLohnuntergrenze>();
             Bind<IBvgCalculator>().To<CalculatorBvg>();
+            Bind<BvgConstants>().ToSelf();
         }
     }
 }

@@ -6,36 +6,40 @@ namespace BvgCalculatorEngine.Implementation.Calculators
 {
     public class CalculatorAltersguthabenEndeJahr : ICalcAlterguthabenEndeJahr
     {
+        private readonly BvgConstants _constantsBvg;
         private readonly ICalcAltersgutschrift _calcAltersgutschrift;
         private readonly ICalcSchlussalter _calcSchlussalter;
+        private readonly ICalcDateOfPensionierung _calcPensionierung;
 
-        public CalculatorAltersguthabenEndeJahr(ICalcAltersgutschrift calcAltersgutschrift, ICalcSchlussalter calcSchlussalter)
+        public CalculatorAltersguthabenEndeJahr(BvgConstants constantsBvg, ICalcAltersgutschrift calcAltersgutschrift, ICalcSchlussalter calcSchlussalter, 
+            ICalcDateOfPensionierung calcPensionierung)
         {
+            _constantsBvg = constantsBvg;
             _calcAltersgutschrift = calcAltersgutschrift;
             _calcSchlussalter = calcSchlussalter;
+            _calcPensionierung = calcPensionierung;
         }
 
         public decimal Calculate(BvgPlan plan, BvgCalculationInput input)
         {
             int schlussalter = _calcSchlussalter.Calculate(plan, input);
+            DateTime dateOfRetirement = _calcPensionierung.Calculate(plan, input);
 
             int rechnungsjahr = input.DateOfEintritt.Year;
             int bvgAlter = rechnungsjahr - input.DateOfBirth.Year;
 
             bool isPensionierungInRechnungsjahr = bvgAlter == schlussalter;
 
-            DateTime dateOfRetirement = new DateTime(input.DateOfBirth.Year, input.DateOfBirth.Month, 1).AddMonths(1).AddYears(schlussalter).AddDays(-1);
-
-            decimal schrumpfPeriode = dateOfRetirement.Month / 12m;
-            decimal schrumpPeriodeRechnungsjahr = (isPensionierungInRechnungsjahr ? schrumpfPeriode : 1m);
-
-            decimal aghEndeJahr = _calcAltersgutschrift.Calculate(plan, input);
+            decimal aghEndeJahr=0;
             if (bvgAlter >= plan.Eintrittsalter)
             {
-                aghEndeJahr *= schrumpPeriodeRechnungsjahr;
+                decimal schrumpPeriodeRechnungsjahr = (isPensionierungInRechnungsjahr ? dateOfRetirement.Month / 12m : 1m);
+                decimal agsRechnungsjahr = _calcAltersgutschrift.Calculate(plan, input) * schrumpPeriodeRechnungsjahr;
+
+                aghEndeJahr = agsRechnungsjahr + input.Altersguthaben * (1m + _constantsBvg.BvgZins * schrumpPeriodeRechnungsjahr);
             }
 
-            return input.Altersguthaben + aghEndeJahr;
+            return aghEndeJahr;
         }
     }
 }

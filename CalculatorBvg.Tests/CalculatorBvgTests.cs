@@ -28,7 +28,7 @@ namespace CalculatorBvg.Tests
 
         [Trait("BVG Calculator Tests", "Altersguthaben Ende Jahr")]
         [Theory]
-        [InlineData(152000, "1969/03/17", "2016/01/01", 200000.00, 208988.75)]
+        [InlineData(152000, "1969/03/17", "2016/01/01", 200000.00, 211488.75)]
         [InlineData(66000, "1995/05/13", "2016/01/01", 0.00, 0.00)]
         public async Task AltersguthabenEndeJahrTest(int gemeldeterLohnAsInt, string dateOfBirthAsString, 
             string dateOfEintrittAsString, int einlageAsDouble, double expectedEndaltersguthabenAsDouble)
