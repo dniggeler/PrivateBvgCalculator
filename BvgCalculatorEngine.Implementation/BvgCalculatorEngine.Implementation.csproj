@@ -44,6 +44,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Calculators\CalculatorProjectionAltersguthaben.cs" />
     <Compile Include="Calculators\CalculatorBvg.cs" />
     <Compile Include="BvgCalculator.cs" />
     <Compile Include="Calculators\CalculatorAltersgutschrift.cs" />

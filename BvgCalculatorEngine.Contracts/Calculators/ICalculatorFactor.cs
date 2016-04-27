@@ -1,4 +1,3 @@
-
 namespace BvgCalculatorEngine.Contracts.Calculators
 {
     public interface ICalculatorFactor

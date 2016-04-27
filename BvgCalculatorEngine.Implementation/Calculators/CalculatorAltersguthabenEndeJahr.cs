@@ -20,7 +20,7 @@ namespace BvgCalculatorEngine.Implementation.Calculators
             _calcPensionierung = calcPensionierung;
         }
 
-        public decimal Calculate(BvgPlan plan, BvgCalculationInput input)
+        public Tuple<DateTime,decimal> Calculate(BvgPlan plan, BvgCalculationInput input)
         {
             int schlussalter = _calcSchlussalter.Calculate(plan, input);
             DateTime dateOfRetirement = _calcPensionierung.Calculate(plan, input);
@@ -30,7 +30,14 @@ namespace BvgCalculatorEngine.Implementation.Calculators
 
             bool isPensionierungInRechnungsjahr = bvgAlter == schlussalter;
 
-            decimal aghEndeJahr=0;
+            var endOfYear = new DateTime(rechnungsjahr, 1, 1);
+
+            if (isPensionierungInRechnungsjahr)
+            {
+                endOfYear = dateOfRetirement;
+            }
+
+            decimal aghEndeJahr =0;
             if (bvgAlter >= plan.Eintrittsalter)
             {
                 decimal schrumpPeriodeRechnungsjahr = (isPensionierungInRechnungsjahr ? dateOfRetirement.Month / 12m : 1m);
@@ -39,7 +46,7 @@ namespace BvgCalculatorEngine.Implementation.Calculators
                 aghEndeJahr = agsRechnungsjahr + input.Altersguthaben * (1m + _constantsBvg.BvgZins * schrumpPeriodeRechnungsjahr);
             }
 
-            return aghEndeJahr;
+            return Tuple.Create( endOfYear, aghEndeJahr);
         }
     }
 }

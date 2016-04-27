@@ -23,7 +23,7 @@ namespace BvgCalculatorEngine.Implementation.Calculators
 
             result.VersicherterLohn = _calcVersicherterLohn.Calculate(plan, input);
             result.Altersgutschrift = _calcAltersgutschrift.Calculate(plan, input);
-            result.AlterguthabenEndeJahr = _calcAlterguthabenEndeJahr.Calculate(plan, input);
+            result.AlterguthabenEndeJahr = _calcAlterguthabenEndeJahr.Calculate(plan, input).Item2;
 
             result.Altersrente = 1000m;
 

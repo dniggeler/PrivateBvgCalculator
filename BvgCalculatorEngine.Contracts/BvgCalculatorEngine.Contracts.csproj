@@ -43,6 +43,7 @@
     <Compile Include="BvgCalculationInput.cs" />
     <Compile Include="BvgConstants.cs" />
     <Compile Include="BvgPlan.cs" />
+    <Compile Include="Calculators\ICalcProjectionAlterguthaben.cs" />
     <Compile Include="Calculators\ICalcAlterguthabenEndeJahr.cs" />
     <Compile Include="Calculators\ICalcPensionierung.cs" />
     <Compile Include="Calculators\ICalcSchlussalter.cs" />
